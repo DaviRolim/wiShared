@@ -181,3 +181,30 @@ const clearImage = filePath => {
   filePath = path.join(__dirname, '..', filePath)
   fs.unlink(filePath, err => console.log(err))
 }
+
+exports.contributeToWish = async (req, res, next) => {
+  const wishId = req.params.wishId
+  try {
+    const wish = await Wish.findById(wishId)
+
+    if (!wish) {
+      const error = new Error('Could not find wish.')
+      error.statusCode = 404
+      throw error
+    }
+    wish.contributors.push(req.userId)
+    await wish.save()
+    
+    const user = await User.findById(req.userId)
+    user.contributing.push(wishId)
+    await user.save()
+
+    res.status(200).json({ message: 'A gift consists not in what is done or given, but in the intention of the giver or doer.'})
+     
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err) 
+  }
+}

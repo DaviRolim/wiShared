@@ -14,8 +14,11 @@ router.post('/wish', isAuth, validationUtil.saveOrUpdateWish, homeController.cre
 
 router.get('/wish/:wishId', isAuth, homeController.getWish);
 
+
 router.put('/wish/:wishId',isAuth, validationUtil.saveOrUpdateWish, homeController.updateWish);
 
 router.delete('/wish/:wishId', isAuth, homeController.deleteWish);
+
+router.put('/wish/contribute/:wishId', isAuth, homeController.contributeToWish);
 
 module.exports = router;

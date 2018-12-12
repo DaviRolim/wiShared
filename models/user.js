@@ -19,6 +19,12 @@ const userSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Wish'
     }
+  ],
+  contributing: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Wish'
+    }
   ]
   // User will have a list of notifications
 });
