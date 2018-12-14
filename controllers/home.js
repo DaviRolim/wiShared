@@ -208,3 +208,22 @@ exports.contributeToWish = async (req, res, next) => {
     next(err) 
   }
 }
+
+exports.contributingTo = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId)
+    .populate('contributing', '-_id -createdAt -updatedAt -__v')
+    console.log(user.contributing);
+    if (!user.contributing) {
+        const error = new Error(`You're not contributing with anyone`)
+        error.statusCode = 404
+        throw error
+    }
+    res.status(200).json(user.contributing)
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err) 
+  }
+}

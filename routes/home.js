@@ -21,4 +21,6 @@ router.delete('/wish/:wishId', isAuth, homeController.deleteWish);
 
 router.put('/wish/contribute/:wishId', isAuth, homeController.contributeToWish);
 
+router.get('/wishes/contributing', isAuth, homeController.contributingTo);
+
 module.exports = router;
